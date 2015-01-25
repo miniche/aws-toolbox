@@ -2,6 +2,9 @@ FROM debian:wheezy
 
 MAINTAINER Charles-Emmanuel CAMUS
 
+ENV AWS_ACCESS_KEY null
+ENV AWS_SECRET_ACCESS_KEY null
+
 RUN apt-get -qq update \
     && apt-get -qqy upgrade \
     && apt-get -qqy install --no-install-recommends \

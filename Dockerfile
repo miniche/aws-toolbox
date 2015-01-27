@@ -2,8 +2,9 @@ FROM debian:wheezy
 
 MAINTAINER Charles-Emmanuel CAMUS
 
-ENV AWS_ACCESS_KEY null
+ENV AWS_ACCESS_KEY_ID null
 ENV AWS_SECRET_ACCESS_KEY null
+ENV AWS_DEFAULT_REGION null
 
 RUN apt-get -qq update \
     && apt-get -qqy upgrade \
@@ -15,3 +16,6 @@ RUN apt-get -qq update \
 COPY aws-toolbox /opt/aws-toolbox
 
 RUN pip install -r /opt/aws-toolbox/requirements.txt
+RUN pip install awscli
+
+VOLUME /etc/aws-toolbox/

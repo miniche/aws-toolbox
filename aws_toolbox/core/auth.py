@@ -10,6 +10,14 @@
 import ConfigParser
 import os
 
+#: @type current_credentials: Credentials
+current_credentials = None
+
+
+def init():
+    global current_credentials
+    current_credentials = Credentials()
+
 
 class NoCredentialsFound(Exception):
     def __init__(self, message):

@@ -13,9 +13,9 @@ RUN apt-get -qq update \
         python-pip \
     && apt-get clean
 
-COPY aws-toolbox /opt/aws-toolbox
+COPY aws_toolbox /opt/aws_toolbox
 
-RUN pip install -r /opt/aws-toolbox/requirements.txt
+RUN pip install -r /opt/aws_toolbox/requirements.txt
 RUN pip install awscli
 
 VOLUME /etc/aws-toolbox/

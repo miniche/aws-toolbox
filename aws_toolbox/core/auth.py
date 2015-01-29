@@ -17,6 +17,7 @@ current_credentials = None
 def init():
     global current_credentials
     current_credentials = Credentials()
+    current_credentials.retrieve_credentials()
 
 
 class NoCredentialsFound(Exception):

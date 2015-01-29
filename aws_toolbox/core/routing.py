@@ -23,7 +23,9 @@ def init():
     global routes
 
     routes = Mapper()
-    routes.connect(None, "/ec2/instances/{id}/get_status", module='aws_toolbox.modules.ec2', module_class='EC2', method='get_status')
+    with routes.submapper(module='aws_toolbox.modules.ec2', module_class='EC2', path_prefix='/ec2') as m:
+        m.connect(None, '/instances/{id}/get_status', method="get_status")
+        m.connect(None, "/instances/{id}/wait_started", method="wait_started")
 
 
 def match(route):

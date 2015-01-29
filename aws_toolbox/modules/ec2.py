@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
 
+import logging
+import time
+
+import pprint
+
 import boto.ec2
 
 from aws_toolbox.core.auth import current_credentials
@@ -19,8 +24,31 @@ class EC2(object):
 
     def get_status(self, context):
         """
-        Get the current status of the given instance.
+        Gets the current status of the given instance.
         :param context: Requires an instance ID
         :return: Dict
         """
-        return self.connection.get_only_instances(context['id'])[0]
+        instances_data = self.connection.get_only_instances(context['id'])
+        return instances_data[0].state
+
+    def wait_started(self, context):
+        """
+        Waits until the EC2 instance is up.
+        :param context: Requires an instance ID
+        """
+        for i in range(0, 30):
+            status = self.get_status(context)
+
+            if status == 'running':
+                logging.info('Instance is now running!')
+                return True
+            elif status == 'stopped':
+                logging.info('This instance is stopped. Tips: run a start instance command before.')
+                return False
+            else:
+                logging.info('Current status: %s. Waiting...' % (status))
+
+            time.sleep(5)
+
+        logging.info('Instance stills unavailable. Exiting.')
+        return False

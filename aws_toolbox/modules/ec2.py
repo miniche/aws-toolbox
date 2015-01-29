@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 
-import pprint
-
 import boto.ec2
 
 from aws_toolbox.core.auth import current_credentials
 
 
 class EC2(object):
+    """
+    Manages EC2 instances
+    """
+
     def __init__(self):
         self.connection = boto.ec2.connect_to_region(
             current_credentials.current_region,
@@ -16,6 +18,9 @@ class EC2(object):
         )
 
     def get_status(self, context):
-        status = self.connection.get_only_instances(context['id'])
-
-        pprint.pprint(status[0].state)
+        """
+        Get the current status of the given instance.
+        :param context: Requires an instance ID
+        :return: Dict
+        """
+        return self.connection.get_only_instances(context['id'])[0]

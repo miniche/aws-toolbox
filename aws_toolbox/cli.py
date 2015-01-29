@@ -2,18 +2,22 @@
 # -*- coding: utf-8 -*-
 
 import os.path
+import logging
 import sys
 
 
 def init():
-    print 'Retrieving credentials...'
+
+    log.init()
+
+    logging.info('Retrieving credentials...')
     try:
         auth.init()
     except auth.NoCredentialsFound:
         print 'Please check your credential file or environment variable. RTFM :)'
         exit(1)
 
-    print 'Initializing routes...'
+    logging.info('Initializing routes...')
     routing.init()
 
 
@@ -30,6 +34,7 @@ if __name__ == '__main__':
     sys.path.append(os.path.dirname(os.path.dirname(path)))
 
     from aws_toolbox.core import auth
+    from aws_toolbox.core import log
     from aws_toolbox.core import routing
 
     init()

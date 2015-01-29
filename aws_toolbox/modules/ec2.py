@@ -15,7 +15,7 @@ class EC2(object):
             aws_secret_access_key=current_credentials.current_secret_access_key
         )
 
-    def get_status(self):
-        status = self.connection.get_only_instances('i-9cfa3c5d')
+    def get_status(self, context):
+        status = self.connection.get_only_instances(context['id'])
 
         pprint.pprint(status[0].state)

@@ -17,6 +17,11 @@ def init():
     routing.init()
 
 
+def check_arguments():
+    if len(sys.argv) != 2:
+        print 'Usage: %s action_to_perform' % (sys.argv[0])
+        exit(1)
+
 if __name__ == '__main__':
     print 'Welcome to the AWS-Toolbox!'
 
@@ -28,6 +33,7 @@ if __name__ == '__main__':
     from aws_toolbox.core import routing
 
     init()
+    check_arguments()
 
     # Match a URL, returns a dict or None if no match
-    result = routing.match_call('/ec2/instances/2/get_status')
+    result = routing.match_call(sys.argv[1])

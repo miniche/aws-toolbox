@@ -3,8 +3,6 @@
 import logging
 import time
 
-import pprint
-
 import boto.ec2
 
 from aws_toolbox.core.auth import current_credentials

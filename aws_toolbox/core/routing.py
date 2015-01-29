@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from routes import Mapper
+import importlib
 
-import pprint
+from routes import Mapper
 
 #: @type routes: routes.Mapper
 routes = None
@@ -23,7 +23,7 @@ def init():
     global routes
 
     routes = Mapper()
-    routes.connect(None, "/ec2/instances/{id}/get_status", method='modules.ec2')
+    routes.connect(None, "/ec2/instances/{id}/get_status", module='aws_toolbox.modules.ec2', module_class='EC2', method='get_status')
 
 
 def match(route):
@@ -39,16 +39,11 @@ def match(route):
 
 
 def match_call(route):
-    context = match(route)
-    my_import(context['method'])
+    call_method(match(route))
 
 
-def my_import(name):
-    mod = __import__(name)
-    pprint.pprint(mod)
-    components = name.split('.')
-    for comp in components[1:]:
-        mod = getattr(mod, 'EC2')
+def call_method(context):
+    imported_module = importlib.import_module(context['module'])
+    imported_object = getattr(imported_module, context['module_class'])()
+    getattr(imported_object, context['method'])(context)
 
-    pprint(mod)
-    return mod

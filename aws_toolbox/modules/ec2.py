@@ -4,11 +4,7 @@ import pprint
 
 import boto.ec2
 
-from core.auth import current_credentials
-
-
-def toto():
-    print 'toto'
+from aws_toolbox.core.auth import current_credentials
 
 
 class EC2(object):
